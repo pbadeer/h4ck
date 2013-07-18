@@ -38,8 +38,8 @@
             </div>
             <div class="bottom">
                 <span id="message">{{ computer + ":" + folder + " " + user + "$" }}&nbsp;</span>
-                <form ng-submit="addMessage()">
-                    <input type="text" id="input" data-ng-model="input"/>
+                <form ng-submit="sendCommand()">
+                    <input type="text" id="input" data-ng-model="input" required/>
                 </form>
             </div>
         </div>

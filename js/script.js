@@ -57,24 +57,43 @@ function h4ck($scope){
         }
     ];
 
+    $scope.commands = {
+        execute: function(input){
+            if(input == "help")
+                return "execute [item]";
+            else if(!input)
+                return "no item to execute";
+            else
+                return "executed " + input;
+        }
+    };
     $scope.reverse = function(array) {
         return [].concat(array).reverse();
     };
     $scope.pad = function(number) {
         return (number < 10 ? '0' : '') + number;
     }
-    $scope.addMessage = function() {
-        if($scope.input) {
-            var d = new Date;
-            var time = $scope.pad(d.getHours()) + ":" + $scope.pad(d.getMinutes()) + ":" + $scope.pad(d.getSeconds());
+    $scope.addMessage = function(message) {
+        var d = new Date;
+        var time = $scope.pad(d.getHours()) + ":" + $scope.pad(d.getMinutes()) + ":" + $scope.pad(d.getSeconds());
 
-            $scope.messages[$scope.messages.length] = {
-                content: $scope.input,
-                time: time
-            }
-
-            $scope.input = "";
+        $scope.messages[$scope.messages.length] = {
+            content: message,
+            time: time
         }
     };
-}
+    $scope.sendCommand = function() {
+        var i = $scope.input.split(' ');
 
+        $scope.addMessage($scope.computer + ":" + $scope.folder + " " + $scope.user + "$ " + $scope.input);
+
+        if(!$scope.commands[i[0]])
+            $scope.addMessage("\"" + i[0] + "\" command not found");
+        if($scope.commands[i[0]] && !i[1])
+            $scope.addMessage($scope.commands[i[0]]());
+        if($scope.commands[i[0]] && i[1])
+            $scope.addMessage($scope.commands[i[0]](i[1]));
+
+        $scope.input = '';
+    }
+}
