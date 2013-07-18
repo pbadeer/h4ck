@@ -7,17 +7,40 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css"/>
 </head>
-<body class="container">
+<body class="container" data-ng-controller="h4ck">
     <div class="row">
-        <div class="span4">notifications</div>
-        <div class="span4">active hacks</div>
-        <div class="span4">attacked sites</div>
+        <div class="span4">
+            <ul class="nav nav-list">
+                <li class="nav-header">notifications</li>
+                <li data-ng-repeat="n in notifications">{{n.content}}</li>
+            </ul>
+            <!--<div class="alert alert-{{n.type}}" data-ng-repeat="n in notifications">
+                <strong>{{n.type}}</strong> {{n.content}}
+            </div>-->
+        </div>
+        <div class="span4">
+            <ul class="nav nav-list">
+                <li class="nav-header">controlled sites</li>
+                <li data-ng-repeat="site in controlledSites">{{site}}</li>
+            </ul>
+        </div>
+        <div class="span4">
+            <ul class="nav nav-list">
+                <li class="nav-header">attacked sites</li>
+                <li data-ng-repeat="site in attackedSites">{{site}}</li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <div class="span12" id="terminal">
+            <div>
+                <span data-ng-repeat="m in reverse(messages)">{{m.time + " " + m.content}}<br/></span>
+            </div>
             <div class="bottom">
-                <span id="message">computer:folder user$&nbsp;</span>
-                <input type="text" id="input"/>
+                <span id="message">{{ computer + ":" + folder + " " + user + "$" }}&nbsp;</span>
+                <form ng-submit="addMessage()">
+                    <input type="text" id="input" data-ng-model="input"/>
+                </form>
             </div>
         </div>
     </div>
