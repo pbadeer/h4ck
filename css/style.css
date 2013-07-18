@@ -1,0 +1,37 @@
+html, body {
+    height: 100%;
+    font-size: 12px;
+    font-family: "Source Code Pro", "Courier New", sans-serif;
+}
+
+.row {
+    height: 50%;
+}
+#terminal {
+    position: relative;
+    height: 100%;
+}
+.bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+#input {
+    width: 60%;
+    float: left;
+    height: 1.5em;
+    line-height: 1.5em;
+    font-size: 1.5em;
+    font-family: inherit;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+#message {
+    float: left;
+    height: 1.5em;
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
