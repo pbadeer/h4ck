@@ -21,13 +21,13 @@
         <div class="span4">
             <ul class="nav nav-list">
                 <li class="nav-header">controlled sites</li>
-                <li data-ng-repeat="site in controlledSites">{{site}}</li>
+                <li data-ng-repeat="n in controlledSites">{{sites[n].url + " (" + sites[n].ip + ")"}}</li>
             </ul>
         </div>
         <div class="span4">
             <ul class="nav nav-list">
                 <li class="nav-header">attacked sites</li>
-                <li data-ng-repeat="site in attackedSites">{{site}}</li>
+                <li data-ng-repeat="n in attackedSites">{{sites[n].url + " (" + sites[n].ip + ")"}}</li>
             </ul>
         </div>
     </div>

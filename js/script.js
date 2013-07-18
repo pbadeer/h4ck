@@ -22,19 +22,30 @@ function h4ck($scope){
             type: "success"
         }
     };
-    $scope.attackedSites = [
-        "www.asdf.com",
-        "www.querty.com",
-        "www.google.com",
-        "www.pacman.com",
-        "www.sony.com"
-    ];
-    $scope.controlledSites = [
-        "www.querty.com",
-        "www.pancakes.com",
-        "www.supercompany.com",
-        "www.qq.com"
-    ];
+    $scope.sites = {
+        1: {
+            url: "www.asdf.com",
+            ip: "63.21.100.03"
+        },
+        2: {
+            url: "www.querty.com",
+            ip: "42.01.34.66"
+        },
+        3: {
+            url: "www.google.com",
+            ip: "73.18.95.135"
+        },
+        4: {
+            url: "www.pacman.com",
+            ip: "93.58.150.24"
+        },
+        5: {
+            url: "www.sony.com",
+            ip: "32.42.244.92"
+        }
+    };
+    $scope.attackedSites = [2, 1, 3, 5];
+    $scope.controlledSites = [4, 2, 1];
     $scope.messages = [
         {
             content: "*** w31c0m3 70 7h3 w0r1d 0f h4ck ***",
