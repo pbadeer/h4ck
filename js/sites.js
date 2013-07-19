@@ -1,49 +1,78 @@
 // Site Content Templates (static)
 var Template = {
     usedIPs: [],
-    urls: ["asdf", "google", "blue", "black", "yellow", "pancake", "yahoo"], // should be imported from long list
+    urls: ["asdf", "google", "blue", "black", "yellow", "pancake", "yahoo", "github", "hackers", "unite", "spotify"], // should be imported from long list
     features: ["rdm", "ports", "twitter", "facebook", "whois", "ftp", "pages", "database"],
     pages: ["about", "contact", "home", "login", "registration", "terms", "privacy", "subscribe", "account"],
     domains: ["com", "net", "org", "io", "us", "me"],
-    site: {
-        url: null,
-        ip: null,
-        features: {}
+    site: function(){
+        return {
+            ip: null,
+            url: null,
+            features: {}
+        };
     },
-    twitter: {
-        xss: null,
-        password: null,
-        connections: null,
-        session: null
+    twitter: function(){
+        return {
+            xss: null,
+            password: null,
+            connections: null,
+            session: null
+        };
     },
-    facebook: {
-        fanpage: null,
-        profile: null,
-        xss: null,
-        password: null,
-        session: null
+    facebook: function(){
+        return {
+            fanpage: null,
+            profile: null,
+            xss: null,
+            password: null,
+            session: null
+        };
     },
-    whois: {
-        contact: null,
-        admin: null,
-        login: null
+    whois: function(){
+        return {
+            contact: null,
+            admin: null,
+            login: null
+        };
     }
 };
 
 // Site Content Generator
 var Generator = {
-    ports: function(){},
-    pages: function(){},
+    ports: function(){
+        var amount = Math.floor((Math.random()*20)+1);
+        var portSet = {};
+        for (var i = 0; i < amount; i++){
+            portSet[Math.floor((Math.random()*9998)+1)] = null;
+        }
+        return portSet;
+    },
+    pages: function(){
+        var amount = Math.floor((Math.random() * Template.pages.length));
+        var pages = Template.pages;
+        var pageSet = {};
+        for (var i = 0; i < amount; i++){
+            pageSet[pages[i]] = null;
+            var index = pages.indexOf(pages[i]);
+            pages.splice(index, 1);
+        }
+        return pageSet;
+    },
     ftp: function(){},
     rdm: function(){},
     database: function(){},
+    email: function(){},
+    vulnerabilities: function(features){
+        return features;
+    },
     ip: function(){
         var ip = Math.floor((Math.random()*998)+1) +
             "." + Math.floor((Math.random()*998)+1) +
             "." + Math.floor((Math.random()*998)+1) +
             "." + Math.floor((Math.random()*998)+1);
 
-        if(Template.usedIPs.search(ip))
+        if(Template.usedIPs.indexOf(ip) != -1)
             ip = Generator.ip();
         else
             Template.usedIPs[Template.usedIPs.length] = ip;
@@ -51,19 +80,21 @@ var Generator = {
         return ip;
     },
     url: function(){
-        var n = Math.floor((Math.random() * Template.urls.length) + 1);
-        var url = "www." + Template.urls[n] + Template.domains[Math.floor((Math.random() * Template.domains.length) + 1)];
-        delete Template.urls[n];
+        var n = Math.floor(Math.random() * Template.urls.length);
+        var r = "www." + Template.urls[n] + "." + Template.domains[Math.floor(Math.random() * Template.domains.length)];
 
-        return url;
+        var index = Template.urls.indexOf(Template.urls[n]);
+        Template.urls.splice(index, 1);
+
+        return r;
     },
     features: function(){
         var types = Template.features,
             featureSet = {},
             i;
 
-        for (i = 0; i < Math.floor((Math.random() * Template.features.length) + 1); i++){
-            var current = types[Math.floor((Math.random() * Template.features.length) + 1)];
+        for (i = 0; i < Math.floor(Math.random() * Template.features.length); i++){
+            var current = types[Math.floor(Math.random() * Template.features.length)];
             var v;
 
             if(Template[current])
@@ -72,19 +103,30 @@ var Generator = {
                 v = Generator[current];
 
             featureSet[current] = v;
-            delete types[current];
+
+            var index = types.indexOf(types[current]);
+            types.splice(index, 1);
         }
 
         return featureSet;
     },
     site: function(){
-        var s = Template.site;
+        var s = new Template.site;
+
         s.ip = Generator.ip();
         s.url = Generator.url();
-        s.features = Generator.features();
-        // randomize all feature values (bool)
+        s.features = Generator.vulnerabilities(Generator.features());
+
+        return s;
     }
 };
 
-// sites = gensite * urls.length
 // add emails to sites after master creation
+
+var Sites = {};
+var amount = Template.urls.length;
+
+for (var i = 0; i < amount; i++) {
+    Sites[i] = Generator.site();
+}
+
