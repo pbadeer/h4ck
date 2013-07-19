@@ -35,6 +35,13 @@ var Template = {
             admin: null,
             login: null
         };
+    },
+    database: function(){
+        return {
+            users: null,
+            tables: null,
+            injection: null
+        }
     }
 };
 
@@ -61,7 +68,6 @@ var Generator = {
     },
     ftp: function(){},
     rdm: function(){},
-    database: function(){},
     email: function(){},
     vulnerabilities: function(features){
         return features;
@@ -95,14 +101,18 @@ var Generator = {
 
         for (i = 0; i < Math.floor(Math.random() * Template.features.length); i++){
             var current = types[Math.floor(Math.random() * Template.features.length)];
-            var v;
+            var feature;
 
-            if(Template[current])
-                v = Template[current];
-            else if (Generator[current])
-                v = Generator[current];
+            if(Template.hasOwnProperty(current)){
+                if (typeof Template[current] == 'function')
+                    feature = new Template[current];
+                else
+                    feature = Template[current];
+            }
+            else if (Generator.hasOwnProperty(current))
+                feature = Generator[current];
 
-            featureSet[current] = v;
+            featureSet[current] = feature;
 
             var index = types.indexOf(types[current]);
             types.splice(index, 1);
@@ -120,8 +130,6 @@ var Generator = {
         return s;
     }
 };
-
-// add emails to sites after master creation
 
 var Sites = {};
 var amount = Template.urls.length;
