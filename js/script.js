@@ -22,28 +22,6 @@ function h4ck($scope){
             type: "success"
         }
     };
-    $scope.sites = {
-        1: {
-            url: "www.asdf.com",
-            ip: "63.21.100.03"
-        },
-        2: {
-            url: "www.querty.com",
-            ip: "42.01.34.66"
-        },
-        3: {
-            url: "www.google.com",
-            ip: "73.18.95.135"
-        },
-        4: {
-            url: "www.pacman.com",
-            ip: "93.58.150.24"
-        },
-        5: {
-            url: "www.sony.com",
-            ip: "32.42.244.92"
-        }
-    };
     $scope.attackedSites = [2, 1, 3, 5];
     $scope.controlledSites = [4, 2, 1];
     $scope.messages = [
@@ -56,6 +34,8 @@ function h4ck($scope){
             time: "18:24:11"
         }
     ];
+
+    $scope.sites = Sites;
 
     $scope.commands = {
         execute: function(input){
