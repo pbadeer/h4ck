@@ -14,31 +14,28 @@
                 <li class="nav-header">notifications</li>
                 <li data-ng-repeat="n in notifications">{{n.content}}</li>
             </ul>
-            <!--<div class="alert alert-{{n.type}}" data-ng-repeat="n in notifications">
-                <strong>{{n.type}}</strong> {{n.content}}
-            </div>-->
         </div>
         <div class="span4">
             <ul class="nav nav-list">
                 <li class="nav-header">controlled sites</li>
-                <li data-ng-repeat="n in controlledSites">{{sites[n].url + " (" + sites[n].ip + ")"}}</li>
+                <li data-ng-repeat="s in controlledSites">{{s.url + " (" + s.ip + ")"}}</li>
             </ul>
         </div>
         <div class="span4">
             <ul class="nav nav-list">
-                <li class="nav-header">attacked sites</li>
-                <li data-ng-repeat="n in attackedSites">{{sites[n].url + " (" + sites[n].ip + ")"}}</li>
+                <li class="nav-header">discovered sites</li>
+                <li data-ng-repeat="s in discoveredSites">{{s.url + " (" + s.ip + ")"}}</li>
             </ul>
         </div>
     </div>
     <div class="row">
         <div class="span12" id="terminal">
             <div>
-                <span data-ng-repeat="m in reverse(messages)">{{m.time + " " + m.content}}<br/></span>
+                <span data-ng-repeat="m in messages">{{m.time + " " + m.content}}<br/></span>
             </div>
             <div class="bottom">
-                <span id="message">{{ computer + ":" + folder + " " + user + "$" }}&nbsp;</span>
-                <form ng-submit="sendCommand()">
+                <span id="message">{{ connected.url + " (" + connected.ip + "):" + connected.folder + " " + connected.user + "$" }}&nbsp;</span>
+                <form data-ng-submit="sendCommand()">
                     <input type="text" id="input" data-ng-model="input" required/>
                 </form>
             </div>
@@ -47,7 +44,8 @@
 
     <script src="js/angular.min.js"></script>
     <script src="js/ui-bootstrap-tpls-0.4.0.min.js"></script>
-    <script src="js/sites.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/generator.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

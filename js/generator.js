@@ -1,51 +1,3 @@
-// Site Content Templates (static)
-var Template = {
-    usedIPs: [],
-    urls: ["asdf", "google", "blue", "black", "yellow", "pancake", "yahoo", "github", "hackers", "unite", "spotify"], // should be imported from long list
-    features: ["rdm", "ports", "twitter", "facebook", "whois", "ftp", "pages", "database"],
-    pages: ["about", "contact", "home", "login", "registration", "terms", "privacy", "subscribe", "account"],
-    domains: ["com", "net", "org", "io", "us", "me"],
-    site: function(){
-        return {
-            ip: null,
-            url: null,
-            features: {}
-        };
-    },
-    twitter: function(){
-        return {
-            xss: null,
-            password: null,
-            connections: null,
-            session: null
-        };
-    },
-    facebook: function(){
-        return {
-            fanpage: null,
-            profile: null,
-            xss: null,
-            password: null,
-            session: null
-        };
-    },
-    whois: function(){
-        return {
-            contact: null,
-            admin: null,
-            login: null
-        };
-    },
-    database: function(){
-        return {
-            users: null,
-            tables: null,
-            injection: null
-        }
-    }
-};
-
-// Site Content Generator
 var Generator = {
     ports: function(){
         var amount = Math.floor((Math.random()*20)+1);
@@ -87,7 +39,7 @@ var Generator = {
     },
     url: function(){
         var n = Math.floor(Math.random() * Template.urls.length);
-        var r = "www." + Template.urls[n] + "." + Template.domains[Math.floor(Math.random() * Template.domains.length)];
+        var r = Template.urls[n] + "." + Template.domains[Math.floor(Math.random() * Template.domains.length)];
 
         var index = Template.urls.indexOf(Template.urls[n]);
         Template.urls.splice(index, 1);
@@ -99,7 +51,7 @@ var Generator = {
             featureSet = {},
             i;
 
-        for (i = 0; i < Math.floor(Math.random() * Template.features.length); i++){
+        for (i = 1; i < Math.floor(Math.random() * Template.features.length); i++){
             var current = types[Math.floor(Math.random() * Template.features.length)];
             var feature;
 
@@ -120,21 +72,21 @@ var Generator = {
 
         return featureSet;
     },
-    site: function(){
-        var s = new Template.site;
+    sites: function(){
+        var sites = {};
+        var amount = Template.urls.length;
 
-        s.ip = Generator.ip();
-        s.url = Generator.url();
-        s.features = Generator.vulnerabilities(Generator.features());
+        for (var i = 0; i < amount; i++) {
+            var s = new Template.site;
+            s.ip = Generator.ip();
+            s.url = Generator.url();
+            s.features = Generator.vulnerabilities(Generator.features());
 
-        return s;
+            sites[i] = s;
+        }
+
+        return sites;
     }
 };
 
-var Sites = {};
-var amount = Template.urls.length;
-
-for (var i = 0; i < amount; i++) {
-    Sites[i] = Generator.site();
-}
 
