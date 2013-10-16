@@ -25,12 +25,17 @@ html, body {
 
 .row {
     height: 50%;
+    position: relative;
 }
 #terminal {
-    position: relative;
+    overflow: scroll;
     height: 100%;
 }
+.top {
+    padding-bottom: 2em;
+}
 .bottom {
+    background: white;
     position: absolute;
     bottom: 0;
     left: 0;
