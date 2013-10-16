@@ -71,6 +71,18 @@ function h4ck($scope){
             }
         }
     };
+    $scope.intro = function() {
+        var realisticTypewriter = new RealisticTypewriter();
+        realisticTypewriter.accuracy = 60; 
+        realisticTypewriter.minimumCharactersPerSecond = 1;
+        realisticTypewriter.maximumCharactersPerSecond = 8;
+        realisticTypewriter.minimumInitialDelay = 100;
+        realisticTypewriter.maximumInitialDelay = 800;
+        var welcome = document.getElementById('welcome');
+        realisticTypewriter.type("<p>w31c0m3<br/>70 h4ck</p> loading...", welcome, function () {
+            setTimeout(function(){welcome.style.display = "none";},1000);
+        });
+    }
     $scope.reverse = function(array) {
         return [].concat(array).reverse();
     };
@@ -84,7 +96,7 @@ function h4ck($scope){
             featureList += f + " ";
         }
         return "features: " + featureList;
-    }
+    };
     $scope.findSite = function(val) {
         var obj = $scope.sites;
         var attr = "url";
@@ -157,9 +169,10 @@ function h4ck($scope){
     $scope.init = function(){
         if($scope.loadData() === false){
             $scope.sites = Generator.sites();
-            $scope.addMessage("w31c0m3 70 h4ck");
+            $scope.addMessage("** w31c0m3 70 h4ck **");
         }
         $scope.saveData();
+        $scope.intro();
     };
 
     $scope.$watch('connected', function(){
